@@ -13,27 +13,21 @@ There are two primary types of interactivity: filtering and sorting. One can fil
 ## Data 
 
 Data comes from two sources: [IDEAS/RePEc](https://ideas.repec.org/) 10-year impact factors ([Simple](https://ideas.repec.org/top/top.journals.simple10.html), [Recursive](https://ideas.repec.org/top/top.series.recurse10.html), [Discount](https://ideas.repec.org/top/top.series.discount10.html), [Recursive Discount](https://ideas.repec.org/top/top.series.rdiscount10.html), [H-Index](https://ideas.repec.org/top/top.series.hindex10.html),
-and [Euclian](https://ideas.repec.org/top/top.series.euclid10.html)) and the [Australian Business Deans Counsel Journal Quality List](https://abdc.edu.au/abdc-journal-quality-list/)).^[[Scimago Journal & Country Rank](https://www.scimagojr.com/) is also used in matching journal names. HI personally dislike the rankings they provide.]
+and [Euclian](https://ideas.repec.org/top/top.series.euclid10.html)) and the [Australian Business Deans Counsel Journal Quality List](https://abdc.edu.au/abdc-journal-quality-list/)).^[1]
 
 ## Methods
 
 Each variable from the data sources discussed above is represented by value $x$ of journal $j$. I log transform each of these variables to the influence of outliers. A value of 0.01 is added to avoid issues of the output being undefined.
 
-\begin{equation}
-  y_j = log \Big(x_j + \dfrac{1}{100} \Big)
-\end{equation}
+$$y_j = log \Big(x_j + \dfrac{1}{100} \Big)$$
 
 These log-transformed variables are converted into z-scores.
 
-\begin{equation}
-  z_j = \dfrac{y_j - \bar{y}}{\sigma_y}
-\end{equation}
+$$z_j = \dfrac{y_j - \bar{y}}{\sigma_y}$$
 
 The final index value takes an average of these z-scores across each of the $n$ number of $x$ variables. Missing values are omitted from this calculation. The ABDC values are not included due to the discrete nature of numerically converting the alphabetical scores.
 
-\begin{equation}
-  i_j = \dfrac{1}{n} \sum_n z_j
-\end{equation}
+$$i_j = \dfrac{1}{n} \sum_n z_j$$
 
 ## Example
 
@@ -49,7 +43,7 @@ Lets assume that the *Review of Economics and Statics* is the highest ranked jou
 
 <a><img src="example_screenshot1.png"></a>
 
-Let us further refine this list. While this is an applied paper, the phrase "microeconomics" often indicates a more theoretical approach. Thus, we remove "Micro". Let's also remove other visible journals from the top of the list which do not fit this field such as "Business", "Political Science", "Finance" and "Agricultur".^[This is a purposeful misspelling since it will capture both "Agriculture" and "Agricultural".] There are lots of journals that I see that are a part of a broader conversation such as "Annals", "Association" and "Series" which I wish to omit. Further, given the American setting, let us omit "Oxford" and "Latin". Finally, lets drop the computer dorks (<3) with "Software", "Mechanics" and "Comput".^[Once again, this is a purposful mispelling to capture both "Computer" and "Computing".]
+Let us further refine this list. While this is an applied paper, the phrase "microeconomics" often indicates a more theoretical approach. Thus, we remove "Micro". Let's also remove other visible journals from the top of the list which do not fit this field such as "Business", "Political Science", "Finance" and "Agricultur".^[2] There are lots of journals that I see that are a part of a broader conversation such as "Annals", "Association" and "Series" which I wish to omit. Further, given the American setting, let us omit "Oxford" and "Latin". Finally, lets drop the computer dorks (<3) with "Software", "Mechanics" and "Comput".^[3]
 
 **Excluded Words**: Micro, Business, Political Science, Finance, Agricultur, Annals, Association, Series, Oxford, Latin, Software, Mechanics, Comput
 
@@ -68,3 +62,11 @@ Finally, lets identify a journal whose "ranking" (according to my wack index) is
 3. Despite what the "Updated" variable says in the upper left-hand corner, this app has not been updated since Summer '23.
 
 4. The app will "disconnect" if left alone too long. Just reload your webpage to fix this.
+
+### Footnotes
+
+^[1]: [Scimago Journal & Country Rank](https://www.scimagojr.com/) is also used in matching journal names. HI personally dislike the rankings they provide.
+
+^[2]: This is a purposeful misspelling since it will capture both "Agriculture" and "Agricultural".
+
+^[3]: Once again, this is a purposeful misspelling to capture both "Computer" and "Computing".

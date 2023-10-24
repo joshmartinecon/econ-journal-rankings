@@ -387,20 +387,17 @@ Business Deans Counsel Journal Quality List</a>).<a href="#fn1" class="footnote-
 value <span class="math inline">\(x\)</span> of journal <span class="math inline">\(j\)</span>. I log transform each of these
 variables to the influence of outliers. A value of 0.01 is added to
 avoid issues of the output being undefined.</p>
-<p><span class="math display">\[\begin{equation}
-  y_j = log \Big(x_j + \dfrac{1}{100} \Big)
-\end{equation}\]</span></p>
+<p><span class="math display">\[y_j = log \Big(x_j + \dfrac{1}{100}
+\Big)\]</span></p>
 <p>These log-transformed variables are converted into z-scores.</p>
-<p><span class="math display">\[\begin{equation}
-  z_j = \dfrac{y_j - \bar{y}}{\sigma_y}
-\end{equation}\]</span></p>
+<p><span class="math display">\[z_j = \dfrac{y_j -
+\bar{y}}{\sigma_y}\]</span></p>
 <p>The final index value takes an average of these z-scores across each
 of the <span class="math inline">\(n\)</span> number of <span class="math inline">\(x\)</span> variables. Missing values are omitted
 from this calculation. The ABDC values are not included due to the
 discrete nature of numerically converting the alphabetical scores.</p>
-<p><span class="math display">\[\begin{equation}
-  i_j = \dfrac{1}{n} \sum_n z_j
-\end{equation}\]</span></p>
+<p><span class="math display">\[i_j = \dfrac{1}{n} \sum_n
+z_j\]</span></p>
 </div>
 <div id="example" class="section level2">
 <h2>Example</h2>
@@ -463,18 +460,29 @@ corner, this app has not been updated since Summer ’23.</p></li>
 <li><p>The app will “disconnect” if left alone too long. Just reload
 your webpage to fix this.</p></li>
 </ol>
+<div id="footnotes" class="section level3">
+<h3>Footnotes</h3>
+<p><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>: <a href="https://www.scimagojr.com/">Scimago Journal &amp; Country Rank</a>
+is also used in matching journal names. HI personally dislike the
+rankings they provide.</p>
+<p><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>:
+This is a purposeful misspelling since it will capture both
+“Agriculture” and “Agricultural”.</p>
+<p><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>:
+Once again, this is a purposeful misspelling to capture both “Computer”
+and “Computing”.</p>
+</div>
 </div>
 </div>
 <div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
-<li id="fn1"><p><a href="https://www.scimagojr.com/">Scimago Journal
-&amp; Country Rank</a> is also used in matching journal names. HI
-personally dislike the rankings they provide.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>This is a purposeful misspelling since it will capture
-both “Agriculture” and “Agricultural”.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>Once again, this is a purposful mispelling to capture
-both “Computer” and “Computing”.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>1<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>2<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>3<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>1<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>2<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>3<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 
