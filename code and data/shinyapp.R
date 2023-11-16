@@ -2,7 +2,7 @@ library(shiny)
 library(dplyr)
 library(stringr)
 
-setwd("G:/Other computers/My Laptop/Scraping/EconJournalRankings")
+setwd("C:/Users/jmart/OneDrive/Desktop/GitHub/econ-journal-rankings/code and data")
 
 ##### Load your data #####
 df <- readRDS("Journal Rankings.RDS")
@@ -14,10 +14,10 @@ ui <- fluidPage(
   
   # Author information
   tags$div("Created by ", 
-           tags$a("Joshua C. Martin", href = "http://www.joshmartinecon.com")),
+           tags$a("Joshua C. Martin", href = "https://joshmartinecon.github.io/")),
   
   # Updated
-  tags$div(paste("Updated:"), Sys.Date()),
+  tags$div(paste("Updated: 2023-06-13")),
   
   # Sidebar layout with input and output definitions
   sidebarLayout(
