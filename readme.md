@@ -2,7 +2,7 @@
 
 I created an interactive [shiny](https://shiny.posit.co/) app using R to determine what journals to send econ papers. 
 
-<a href="https://joshua-c-martin.shinyapps.io/EconJournalRankings1/"><img src="website_screenshot.png"></a>
+<a href="https://joshua-c-martin.shinyapps.io/EconJournalRankings/"><img src="website_screenshot.png"></a>
 
 [Source Code](https://github.com/joshmartinecon/econ-journal-rankings/tree/main/code%20and%20data)
 
