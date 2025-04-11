@@ -5,7 +5,7 @@ library(rvest)
 library(fuzzyjoin)
 rm(list = ls())
 '%ni%' = Negate('%in%')
-setwd("C:/Users/jmart/OneDrive/Desktop/GitHub/econ-journal-rankings/data")
+setwd("C:/Users/jmart/OneDrive/Desktop/GitHub/econ-journal-rankings")
 
 ##### webscrape REPEC journal ranking lists (12) #####
 

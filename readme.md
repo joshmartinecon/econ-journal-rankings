@@ -1,72 +1,26 @@
 # Econ Journal Rankings
 
-I created an interactive [shiny](https://shiny.posit.co/) app using R to determine what journals to send econ papers. 
-
-<a href="https://joshua-c-martin.shinyapps.io/EconJournalRankings/"><img src="website_screenshot.png"></a>
-
-[Source Code](https://github.com/joshmartinecon/econ-journal-rankings/tree/main/code%20and%20data)
+I created an interactive [shiny](https://shiny.posit.co/) app using R to determine what journals to send econ papers. You can find the app at [https://joshua-c-martin.shinyapps.io/EconJournalRankings/](https://joshua-c-martin.shinyapps.io/EconJournalRankings/) or the source code for web scraping the data and for the calculations [here](https://github.com/joshmartinecon/econ-journal-rankings/tree/main/journal%20rankings%20webscrape.R).
 
 ## Functionality
 
-There are two primary types of interactivity: filtering and sorting. One can filter by the name of journal both in what names to include and exclude. **This filtering function is case sensitive.** Commas must be added if one wishes to filter by multiple topics.  Additionally, one can filter based on the "overall score" (whose calculation is discussed further below). Finally, one can sort according to their preferred ranking method -- of which 8 are provided.
+There are two primary types of interactivity: filtering and sorting. One can filter by the name of journal both in what names to include and exclude. The filtering it case insensitive. Commas must be added if one wishes to filter by multiple topics.  Additionally, one can filter based on the "overall score" (whose calculation is discussed further below).
+
+For instance, if one were looking for a place to send a really cool paper investigating the [impact of basketball All Star "Magic" Johnson's disclosure of his HIV+ status on subsequent AIDS diagnoses and longevity of heterosexual men](https://doi.org/10.1002/hec.4712), one might type "Health, Sport" in the inclusion search bar given the subject material while typing "Europe, Transport" in the exclusion search bar as the setting of the paper is in the United States while "Sport" will bring in transportation journals.
 
 ## Data 
 
-Data comes from two sources: [IDEAS/RePEc](https://ideas.repec.org/) 10-year impact factors ([Simple](https://ideas.repec.org/top/top.journals.simple10.html), [Recursive](https://ideas.repec.org/top/top.series.recurse10.html), [Discount](https://ideas.repec.org/top/top.series.discount10.html), [Recursive Discount](https://ideas.repec.org/top/top.series.rdiscount10.html), [H-Index](https://ideas.repec.org/top/top.series.hindex10.html),
-and [Euclian](https://ideas.repec.org/top/top.series.euclid10.html)) and the [Australian Business Deans Counsel Journal Quality List](https://abdc.edu.au/abdc-journal-quality-list/)).^[1]
+Data comes from two sources: [IDEAS/RePEc](https://ideas.repec.org/) impact ratings ([Simple](https://ideas.repec.org/top/top.journals.simple10.html), [Recursive](https://ideas.repec.org/top/top.series.recurse10.html), [Discount](https://ideas.repec.org/top/top.series.discount10.html), [Recursive Discount](https://ideas.repec.org/top/top.series.rdiscount10.html), [H-Index](https://ideas.repec.org/top/top.series.hindex10.html),
+and [Euclian](https://ideas.repec.org/top/top.series.euclid10.html, measured both all time and the past 10 years)) and the [Australian Business Deans Counsel Journal Quality List](https://abdc.edu.au/abdc-journal-quality-list/).
 
 ## Methods
 
-Each variable from the data sources discussed above is represented by value $x$ of journal $j$. I log transform each of these variables to the influence of outliers. A value of 0.01 is added to avoid issues of the output being undefined.
+There are 12 primary data sources used to construct the journal ratings, all obtained from [IDEAS/RePEc](https://ideas.repec.org/). For each journal $j$, I standardize its score on each impact metric $m$ by converting the original value $y_{jm}$ to a z-score:
 
-$$y_j = log \Big(x_j + \dfrac{1}{100} \Big)$$
+$$z_{jm} = \dfrac{y_{jm} - \bar{y_m}}{\sigma_m}$$
 
-These log-transformed variables are converted into z-scores.
+I then compute an overall impact score $i_j$ for each journal by taking the average of its z-scores across the $n$metrics in which it appears:
 
-$$z_j = \dfrac{y_j - \bar{y}}{\sigma_y}$$
+$$i_j = \dfrac{1}{n_j} \sum_{m=1}^{n_j} z_{jm}$$
 
-The final index value takes an average of these z-scores across each of the $n$ number of $x$ variables. Missing values are omitted from this calculation. The ABDC values are not included due to the discrete nature of numerically converting the alphabetical scores.
-
-$$i_j = \dfrac{1}{n} \sum_n z_j$$
-
-## Example
-
-I will use one of my (already published) research papers as an example. The paper is on the [impact of basketball All Star "Magic" Johnson's disclosure of his HIV+ status on subsequent AIDS diagnoses and longevity of heterosexual men](https://doi.org/10.1002/hec.4712).
-
-This paper is an applied paper in microeconomics. Two good words indicating these two general themes within this field are "Statistics" and "Applied". Within the applied micro sub-field, this is a health paper with a sports setting. Thus, I will search for any journal with the title "Sport" and "Health". Given that the setting is within the United States, I will search for "America". Finally, I know that Economic Inquiry publishes sports papers from time to time. Thus, I also include "Inquiry".
-
-**Included words**: Inquiry, Statistic, Applied, Health, Sport, America
-
-<a><img src="example_screenshot0.png"></a>
-
-Lets assume that the *Review of Economics and Statics* is the highest ranked journal at which I could plausibly see us receiving an R&R. Thus, I set the "Maximum score" variable on the left-hand side equal to 7. This excludes the *AER*, *AEJ:Macro* and *AEJ:AE*.
-
-<a><img src="example_screenshot1.png"></a>
-
-Let us further refine this list. While this is an applied paper, the phrase "microeconomics" often indicates a more theoretical approach. Thus, we remove "Micro". Let's also remove other visible journals from the top of the list which do not fit this field such as "Business", "Political Science", "Finance" and "Agricultur".^[2] There are lots of journals that I see that are a part of a broader conversation such as "Annals", "Association" and "Series" which I wish to omit. Further, given the American setting, let us omit "Oxford" and "Latin". Finally, lets drop the computer dorks (<3) with "Software", "Mechanics" and "Comput".^[3]
-
-**Excluded Words**: Micro, Business, Political Science, Finance, Agricultur, Annals, Association, Series, Oxford, Latin, Software, Mechanics, Comput
-
-<a><img src="example_screenshot2.png"></a>
-
-Finally, lets identify a journal whose "ranking" (according to my wack index) is the lowest that we would accept in the paper's current form. Hypothetically, I chose the *Journal of Sports Economics*. In my index, it has a value of 0.29. Thus, I set this as the "Minimum Score" in the area on the left-hand side.
-
-<a><img src="example_screenshot3.png"></a>
-
-## Disclaimers
-
-1. This app only *attempts* to provide numerical rankings to each of the economics (and economics-related) academic journals. Clearly, there is a huge degree of subjectivity in these rankings. This work should not be interpreted as anything beyond a sloppy, first attempt at providing one with a set of possible future homes for research papers.
-
-2. The app is slow, crashes often and I am sure there are bugs. I'll attempt to fix them as they arise. It can help to close out of other applications and websites if the app is crashing frequently.
-  
-3. Despite what the "Updated" variable says in the upper left-hand corner, this app has not been updated since Summer '23.
-
-4. The app will "disconnect" if left alone too long. Just reload your webpage to fix this.
-
-### Footnotes
-
-^[1]: [Scimago Journal & Country Rank](https://www.scimagojr.com/) is also used in matching journal names. HI personally dislike the rankings they provide.
-
-^[2]: This is a purposeful misspelling since it will capture both "Agriculture" and "Agricultural".
-
-^[3]: Once again, this is a purposeful misspelling to capture both "Computer" and "Computing".
+where $n_j$ is the number of metrics for which journal $j$ has available data.

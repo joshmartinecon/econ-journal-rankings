@@ -2,9 +2,11 @@ library(shiny)
 library(dplyr)
 library(stringr)
 library(DT)
+library(rsconnect)
 
-setwd("C:/Users/jmart/OneDrive/Desktop/GitHub/econ-journal-rankings/data")
+##### Load data #####
 
+# setwd("C:/Users/jmart/OneDrive/Desktop/GitHub/econ-journal-rankings")
 df <- readRDS("Journal Rankings.RDS")
 
 ##### ui #####

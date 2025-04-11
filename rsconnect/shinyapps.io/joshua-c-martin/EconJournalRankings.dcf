@@ -1,0 +1,10 @@
+name: EconJournalRankings
+title:
+username: joshua-c-martin
+account: joshua-c-martin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14500118
+bundleId: 10100043
+url: https://joshua-c-martin.shinyapps.io/EconJournalRankings/
+version: 1
