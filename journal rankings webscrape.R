@@ -3,9 +3,10 @@
 
 library(rvest)
 library(fuzzyjoin)
+library(stringr)
 rm(list = ls())
 '%ni%' = Negate('%in%')
-setwd("C:/Users/jmart/OneDrive/Desktop/GitHub/econ-journal-rankings")
+setwd("C:/Users/jmart/Dropbox/github/econ-journal-rankings")
 
 ##### webscrape REPEC journal ranking lists (12) #####
 
@@ -24,7 +25,7 @@ for(i in 1:length(typez)){
   x <- x[-1,]
   x <- data.frame(
     journal = x[,2],
-    rating = log(as.numeric(x[,3]) + 0.001)
+    rating = asinh(as.numeric(x[,3]))
   )
   x[,2] <- (x[,2] - mean(x[,2])) / sd(x[,2])
   x$type <- typez[i]
@@ -77,14 +78,13 @@ x$cleaned_journal2 <- gsub("The ", "", x$cleaned_journal)
 
 ##### match in the Australian Business Deans Council Ratings ####
 
-y <- openxlsx::read.xlsx("https://abdc.edu.au/wp-content/uploads/2023/05/ABDC-JQL-2022-v3-100523.xlsx")
+y <- openxlsx::read.xlsx("https://abdc.edu.au/wp-content/uploads/2026/03/ABDC-JQL-2025-v1-260326.xlsx")
 colnames(y) <- y[2,]
-y <- y[-1:-2,]
-y$`2022 rating` <- trimws(y$`2022 rating`)
+y <- y[-1:-2,]f
+y$`2025 rating` <- trimws(y$`2025 rating`)
 colnames(y)[1] <- "journal_title"
 y$journal_title2 <- gsub("The ", "", y$journal_title)
 y$journal_title2 <- sapply(y$journal_title2, clean_journal)
-
 y$journal_title2 <- str_remove(y$journal_title2, "\\s*\\(.*?\\)")
 
 matched <- stringdist_left_join(x, y,
@@ -93,12 +93,11 @@ matched <- stringdist_left_join(x, y,
                                 max_dist = 0.1, # Adjust for strictness
                                 distance_col = "dist")
 
-matched_best <- matched %>%
-  group_by(cleaned_journal2) %>%
-  slice_min(order_by = dist, with_ties = TRUE) %>%
-  ungroup()
+matched_best <- do.call(rbind, lapply(split(matched, matched$cleaned_journal2), function(g) {
+  g[g$dist == min(g$dist), ]
+}))
 
-x$abdc <- matched_best$`2022 rating`[match(x$cleaned_journal2, 
+x$abdc <- matched_best$`2025 rating`[match(x$cleaned_journal2, 
                                            matched_best$cleaned_journal2)]
 
 
