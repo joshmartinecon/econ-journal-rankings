@@ -16,7 +16,7 @@ ui <- fluidPage(
   
   tags$div("Created by ", 
            tags$a("Joshua C. Martin", href = "https://joshmartinecon.github.io/")),
-  tags$div(paste("Updated:", Sys.Date())),
+  tags$div("Updated: 2026/05/19"),
   
   # Custom layout with floating sidebar
   fluidRow(
